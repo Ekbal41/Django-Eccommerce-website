@@ -19,6 +19,8 @@ class Category(BaseModel):
 
     def __str__(self) -> str:
         return self.category_name
+    
+    
 #-------------------------------------------------------------------
 class ColorVariant(BaseModel):
     color_name = models.CharField(max_length=100)
@@ -53,6 +55,14 @@ class Product(BaseModel):
 
     def __str__(self) -> str:
         return self.product_name
+    
+    def get_product_price_by_size(self , size):
+        size = SizeVariant.objects.get(size_name=size)
+        return self.price + size.price
+
+#-------------------------------------------------------------------------
+
+
 
 
 class ProductImage(BaseModel):
