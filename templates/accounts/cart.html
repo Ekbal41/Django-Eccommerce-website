@@ -1,5 +1,5 @@
 {% extends "base/base.html" %}
-
+{%load static%}
 
 {% block start %}
 
@@ -21,10 +21,11 @@
     </tr>
     </thead>
     <tbody>
+       
         
     {% for item in cartitems %}
-
     
+   
     
     <tr>
         <td>
@@ -52,7 +53,7 @@
         </td>
         <td class="text-right"> 
         <a data-original-title="Save to Wishlist" title="" href="" class="btn btn-light" data-toggle="tooltip"> <i class="fa fa-heart"></i></a> 
-        <a href="" class="btn btn-light"> Remove</a>
+        <a href="/accounts/remove-from-cart/{{item.uid}}" class="btn btn-light"> Remove</a>
         </td>
     </tr>
     
@@ -75,17 +76,22 @@
         <aside class="col-md-3">
             <div class="card mb-3">
                 <div class="card-body">
-                <form>
+                <form method="POST">
+                    {% csrf_token %}
+                    {%include 'base/alert.html'%}
                     <div class="form-group">
                         <label>Have coupon?</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="" placeholder="Coupon code">
+                            <input type="text" class="form-control" name="coupon" placeholder="Coupon code">
                             <span class="input-group-append"> 
-                                <button class="btn btn-primary">Apply</button>
+                                <button type="submit" class="btn btn-primary">Apply</button>
                             </span>
                         </div>
                     </div>
                 </form>
+                {% if cart.coupon %}
+                <a  href= "/accounts/remove_coupon/{{cart.uid}}"class="btn btn-success">{{cart.coupon.coupon_code}}</a>
+                {% endif %}
                 </div> <!-- card-body.// -->
             </div>  <!-- card .// -->
             <div class="card">
@@ -96,7 +102,7 @@
                         </dl>
                         <dl class="dlist-align">
                           <dt>Discount:</dt>
-                          <dd class="text-right">00</dd>
+                          <dd class="text-right">0</dd>
                         </dl>
                         <dl class="dlist-align">
                           <dt>Total:</dt>
@@ -104,7 +110,7 @@
                         </dl>
                         <hr>
                         <p class="text-center mb-3">
-                            <img src="images/misc/payments.png" height="26">
+                            <img style="height:100px; width: 100px; cursor: pointer;" src="{% static 'images/payment.png' %}" height="26">
                         </p>
                         
                 </div> <!-- card-body.// -->

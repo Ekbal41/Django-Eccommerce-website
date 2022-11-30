@@ -85,7 +85,33 @@ def activate_email(request , email_token):
 def cart(request):
     cart = Cart.objects.get(user=request.user , is_paid=False)
     cartitems =cartItems.objects.filter(cart = cart)
-   
+    if not cartitems.exists():
+        cart.coupon = None
+        cart.save()
+    if request.method == 'POST':
+        coupon = request.POST.get('coupon')
+        coupon_obj = Coupon.objects.filter(coupon_code = coupon)
+        if not  coupon_obj.exists():
+            messages.warning(request, 'Invalid Coupon.')
+            return HttpResponseRedirect(request.path_info)
+        
+        
+            
+
+        if cart.coupon:
+            messages.warning(request, 'Coupon already applied.')
+            return HttpResponseRedirect(request.path_info)
+        if cart.get_cart_total() < coupon_obj[0].minimum_amount:
+            messages.warning(request, 'Minimum order value not reached.')
+            return HttpResponseRedirect(request.path_info)
+        
+        if coupon_obj[0].is_expired:
+            messages.warning(request, 'Givem coupon is expired!.')
+            return HttpResponseRedirect(request.path_info)
+        cart.coupon = coupon_obj[0]
+        cart.save()
+        messages.success(request, 'Coupon applied succesfuly.')
+        return HttpResponseRedirect(request.path_info)
     
     context = {
        
@@ -94,7 +120,12 @@ def cart(request):
     }
     return render(request , 'accounts/cart.html',   context)
 
-
+def remove_coupon(request, cuid):
+    cart = Cart.objects.get(uid =cuid)
+    cart.coupon = None
+    cart.save()
+    messages.success(request, 'Coupon removed succesfuly.')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 #----------------------------------------------------------------
 def add_to_cart(request, uid):
@@ -111,3 +142,14 @@ def add_to_cart(request, uid):
         cart_item.save()
         
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    
+    
+def remove_from_cart(request, uid):
+    try:
+        cart_item = cartItems.objects.get(uid=uid)
+        cart_item.delete()
+    except cartItems.DoesNotExist:
+        print("Item does not exist")
+        
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        

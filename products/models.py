@@ -68,3 +68,12 @@ class Product(BaseModel):
 class ProductImage(BaseModel):
     product = models.ForeignKey(Product , on_delete=models.CASCADE , related_name="product_images")
     image =  models.ImageField(upload_to="product")
+    
+class Coupon(BaseModel):
+    coupon_code = models.CharField(max_length=100)
+    discount = models.IntegerField()
+    is_expired = models.BooleanField(default=False)
+    minimum_amount = models.IntegerField(default=0)
+
+    def __str__(self) -> str:
+        return self.coupon_code
