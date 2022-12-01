@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate , login , logout
 from django.http import HttpResponseRedirect,HttpResponse
+from django.contrib.auth.decorators import login_required
 
 from products.models import Product, SizeVariant
 # Create your views here.
@@ -87,6 +88,7 @@ def activate_email(request , email_token):
         return HttpResponse('Invalid Email token')
 
 #---------------------------------------------------------------
+@login_required(login_url='/accounts/login')
 def cart(request):
     cart = Cart.objects.get(user=request.user , is_paid=False)
     cartitems =cartItems.objects.filter(cart = cart)
@@ -124,7 +126,7 @@ def cart(request):
         'cartitems':cartitems
     }
     return render(request , 'accounts/cart.html',   context)
-
+@login_required(login_url='account/login')
 def remove_coupon(request, cuid):
     cart = Cart.objects.get(uid =cuid)
     cart.coupon = None
@@ -133,6 +135,7 @@ def remove_coupon(request, cuid):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 #----------------------------------------------------------------
+@login_required(login_url='/accounts/login')
 def add_to_cart(request, uid):
     variant = request.GET.get('variant')
     product = Product.objects.get(uid=uid)
@@ -148,7 +151,7 @@ def add_to_cart(request, uid):
         
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     
-    
+@login_required(login_url='/accounts/login')    
 def remove_from_cart(request, uid):
     try:
         cart_item = cartItems.objects.get(uid=uid)
