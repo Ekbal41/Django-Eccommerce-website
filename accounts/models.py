@@ -15,7 +15,8 @@ class Profile(BaseModel):
     
     def get_cart_items(self):
         return cartItems.objects.filter(cart__user=self.user , cart__is_paid=False).count()
-
+    def __str__(self) -> str:
+        return self.user.email
 class Cart(BaseModel):
     user = models.ForeignKey(User , on_delete=models.CASCADE , related_name="carts")
     is_paid = models.BooleanField(default=False)
@@ -42,7 +43,8 @@ class Cart(BaseModel):
                 return t
         
         return sum(price)
-
+    def __str__(self) -> str:
+        return self.user.email
         
 class cartItems(BaseModel):
     cart = models.ForeignKey(Cart , on_delete=models.CASCADE , related_name="cart_items")
@@ -59,7 +61,7 @@ class cartItems(BaseModel):
            size_variant_price = self.size_variant.price
            price.append(size_variant_price)
         return sum(price)
-        
+       
     
 @receiver(post_save , sender = User)
 def  send_email_token(sender , instance , created , **kwargs):

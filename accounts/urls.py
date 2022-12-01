@@ -1,8 +1,8 @@
 from django.urls import path
-from accounts.views import login_page,register_page , activate_email
+from accounts.views import login_page,register_page , activate_email,logout_user
 from accounts.views import  add_to_cart,cart, remove_from_cart, remove_coupon
 
-from products.views import get_product 
+
 urlpatterns = [
    path('login/' , login_page , name="login" ),
    path('register/' , register_page , name="register"),
@@ -11,4 +11,5 @@ urlpatterns = [
    path('cart/' , cart , name="cart"),
    path('remove-from-cart/<uid>/' , remove_from_cart , name="remove_from_cart"),
    path('remove_coupon/<cuid>/' , remove_coupon , name="remove_coupon"),
+   path('logout/' , logout_user , name="logout" ),
 ]

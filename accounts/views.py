@@ -14,6 +14,11 @@ from .models import Cart, Profile, cartItems
 from products.models import *
 
 
+def logout_user(request):
+    logout(request)
+    return redirect('/')
+
+
 def login_page(request):
     
     if request.method == 'POST':
