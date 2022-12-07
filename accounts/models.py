@@ -43,6 +43,30 @@ class Cart(BaseModel):
                 return t
         
         return sum(price)
+    def get_coupon_discount(self):
+        discount_price = 0
+        if self.coupon:
+            if self.coupon.is_expired:
+                discount_price += 0
+            if not self.coupon:
+                discount_price += 0
+            else:
+                discount_price += self.coupon.discount
+        return discount_price
+        
+    def get_cart_total_without_dis(self):
+        cart_items = self.cart_items.all()
+        price =[]
+        for cr in cart_items:
+            price.append(cr.prodect.price)
+            if cr.color_variant:
+                color_variant_price = cr.color_variant.price
+                price.append(color_variant_price)
+            if cr.size_variant:
+                size_variant_price = cr.size_variant.price
+                price.append(size_variant_price)
+        return sum(price)
+                
     def __str__(self) -> str:
         return self.user.email
         

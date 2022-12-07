@@ -1,53 +1,164 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-    <head>
-        <title>Your Invoice</title>
-        <style type="text/css">
-            body {
-                font-weight: 200;
-                font-size: 14px;
-            }
-            .header {
-                font-size: 20px;
-                font-weight: 100;
-                text-align: center;
-                color: #007cae;
-            }
-            .title {
-                font-size: 22px;
-                font-weight: 100;
-               /* text-align: right;*/
-               padding: 10px 20px 0px 20px;  
-            }
-            .title span {
-                color: #007cae;
-            }
-            .details {
-                padding: 10px 20px 0px 20px;
-                text-align: left !important;
-                /*margin-left: 40%;*/
-            }
-            .hrItem {
-                border: none;
-                height: 1px;
-                /* Set the hr color */
-                color: #333; /* old IE */
-                background-color: #fff; /* Modern Browsers */
-            }
-        </style>
-    </head>
-    <body>
-        <div class='wrapper'>
-            <div class='header'>
-                <p class='title'>Invoice # </p>
-            </div>
-        <div>
-        <div class='details'>
-            Name: {{customer_name}}<br/>
-            Amount: {{amount}} <br/>
-            Date: {{today}} 
-            <hr class='hrItem' />
+<!D<!DOCTYPE html>
+<html  lang="en">
+<head>
+    <meta  charset="UTF-8">
+     <title>duck</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+:root {
+  --primary-color: white;  
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 0.5px;
+}
+#unit{
+    text-align: center;
+}
+
+body {
+  background-color: var(--primary-color);
+}
+
+.invoice-card {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  padding: 10px 2em;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-height: 25em;
+  width: 22em;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.15);
+}
+
+.invoice-card > div {
+  margin: 5px 0;
+}
+
+.invoice-title {
+  flex: 3;
+}
+
+.invoice-title #date {
+  display: block;
+  margin: 8px 0;
+  font-size: 12px;
+}
+
+.invoice-title #main-title {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2em;
+}
+
+.invoice-title #main-title h4 {
+  letter-spacing: 2.5px;
+}
+
+.invoice-title span {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.invoice-details {
+  flex: 1;
+  border-top: 0.5px dashed grey;
+  border-bottom: 0.5px dashed grey;
+  display: flex;
+  align-items: center;
+}
+
+.invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.invoice-table thead tr td {
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: grey;
+  padding: 8px 0;
+}
+
+.invoice-table thead tr td:nth-last-child(1),
+.row-data td:nth-last-child(1),
+.calc-row td:nth-last-child(1)
+{
+  text-align: right;
+}
+
+.invoice-table tbody tr td {
+    padding: 8px 0;
+    letter-spacing: 0;
+}
+
+.invoice-table .row-data #unit {
+  text-align: center;
+}
+
+.invoice-table .row-data span {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.invoice-footer {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.invoice-footer #later {
+  margin-right: 5px;
+}
+
+
+
+
+
+
+
+    </style>
+</head>
+
+<body>
+    <div class="invoice-card">
+        <div class="invoice-title">
+          <div id="main-title">
+            <h1> {{customer_name}}</h1>
+            
+          </div>
+          <h4>Order Id :{{order_id}}</h4>
+            <h4 id="date">{{today}}</h4>
+            <h4 id="main-title">Here are the list of products you bought.</h4>
+          
+          
         </div>
-    </div>
-    </body>
+
+        
+        <div class="invoice-details">
+            
+          {% for item in items%}
+           {{item}}<br>
+          {% endfor %}
+         <br><br>
+
+           Your Total Amount is : {{total}}<br>
+           Your order will be delivered in 3-5 days.<br>
+              Thank you for shopping with us.
+        </div>
+       
+
+       
+      </div>
+      
+</body>
 </html>

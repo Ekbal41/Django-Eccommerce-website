@@ -12,7 +12,7 @@ def render_to_pdf(template_src, context_dict={}):
     template = get_template(template_src)
     html  = template.render(context_dict)
     result = BytesIO()
-    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+    pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), result)
     if not pdf.err:
         return HttpResponse(result.getvalue(), content_type='application/pdf')
     return None
@@ -24,13 +24,17 @@ from django.views.generic import View
 
 class GeneratePdf(View):
     def get(self, request, *args, **kwargs):
-        tran = Transaction.objects.get(user=request.user)
-        print()
+        tran = Transaction.objects.filter(user=request.user).order_by('-tran_date').first()
+        text_item = tran.items
+        items = text_item.split('.')
+        
         data = {
              'today': datetime.date.today(), 
              'amount': tran.amount,
             'customer_name': tran.name,
             'order_id': tran.tran_id,
+            'items': items,
+            'total': tran.amount,
         }
         pdf = render_to_pdf('pdf/invoice.html', data)
         if pdf:

@@ -47,7 +47,7 @@ class CheckoutSuccessView(View):
         for item in cartitems:
             price = item.prodect.price
             strprice = str(price)
-            itemlist += f"Item : {item.prodect.product_name} Price : {strprice}" +'\n'
+            itemlist += f"Item : {item.prodect.product_name} Price : {strprice} ." +'\n'
         try:
             Transaction.objects.create(
                 items = itemlist,
@@ -77,7 +77,7 @@ class CheckoutSuccessView(View):
             )
             messages.success(request,'Payment Successfull')
             cart.is_paid = True
-            cart.delete()
+            cartitems.delete()
             
             
         except:

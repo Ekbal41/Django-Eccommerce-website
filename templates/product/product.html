@@ -34,14 +34,9 @@
                 <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
                 <i class="fa fa-star"></i> 
             </li>
-            <li>
-                <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
-                <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
-                <i class="fa fa-star"></i> 
-            </li>
+           
         </ul>
-        <small class="label-rating text-muted">132 reviews</small>
-        <small class="label-rating text-success"> <i class="fa fa-clipboard-check"></i> 154 orders </small>
+        
     </div> <!-- rating-wrap.// -->
     
     <div class="mb-3"> 
@@ -52,36 +47,25 @@
           {{product.price}}.00
           {%endif%}
         </var> 
-        <span class="text-muted">/per kg</span> 
+        <span class="text-muted">/ Per Item</span> 
     </div> <!-- price-detail-wrap .// -->
     
     <p>{{product.product_desription}}</p>
     
     
     <dl class="row">
-      <dt class="col-sm-3">Model#</dt>
-      <dd class="col-sm-9">Odsy-1000</dd>
+      
     
       <dt class="col-sm-3">Color</dt>
       <dd class="col-sm-9">Brown</dd>
     
-      <dt class="col-sm-3">Delivery</dt>
-      <dd class="col-sm-9">Russia, USA, and Europe </dd>
+     
     </dl>
     
     <hr>
         <div class="form-row">
             <div class="form-group col-md flex-grow-0">
-                <label>Quantity</label>
-                <div class="input-group mb-3 input-spinner">
-                  <div class="input-group-prepend">
-                    <button class="btn btn-light" type="button" id="button-plus"> + </button>
-                  </div>
-                  <input type="text" class="form-control" value="1">
-                  <div class="input-group-append">
-                    <button class="btn btn-light" type="button" id="button-minus"> − </button>
-                  </div>
-                </div>
+                
             </div> <!-- col.// -->
             {% if product.size_variant.count %}
             <div class="form-group col-md">
@@ -102,8 +86,8 @@
             <!-- col.// -->
         </div> <!-- row.// -->
     
-        <a href="#" class="btn  btn-primary"> Buy now </a>
-        <a href="{% url 'add_to_cart' product.uid %}?variant={{selected_size}}" class="btn  btn-outline-primary"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </a>
+        
+        <a href="{% url 'add_to_cart' product.uid %}?variant={{selected_size}}" class="btn  btn-outline-success"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </a>
     </article> <!-- product-info-aside .// -->
             </main> <!-- col.// -->
         </div> <!-- row.// -->

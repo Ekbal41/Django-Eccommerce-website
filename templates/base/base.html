@@ -52,11 +52,12 @@ $(document).ready(function() {
 				</div> <!-- brand-wrap.// -->
 			</div>
 			<div class="col-lg-6 col-sm-12">
-				<form action="#" class="search">
+				<form action="" class="search" method="POST">
+					{% csrf_token %}
 					<div class="input-group w-100">
-						<input type="text" class="form-control" placeholder="Search">
+						<input type="text" name="text" class="form-control" placeholder="Search">
 						<div class="input-group-append">
-						  <button class="btn btn-primary" type="submit">
+						  <button class="btn btn-success" type="submit">
 							<i class="fa fa-search"></i>
 						  </button>
 						</div>
@@ -70,7 +71,7 @@ $(document).ready(function() {
 						<span class="badge badge-pill badge-danger notify">{{request.user.profile.get_cart_items}}</span>
 					</div>
 					<div class="widget-header icontext">
-						<a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-user"></i></a>
+						<a href="#" class="icon icon-sm rounded-circle  border"><i class="fa fa-user"></i></a>
 						<div class="text">
 							<span class="text-muted">Welcome! {{request.user.first_name}}</span>
 							<div> 
