@@ -91,6 +91,7 @@ def activate_email(request , email_token):
 @login_required(login_url='/accounts/login')
 def cart(request):
     cart = Cart.objects.get(user=request.user , is_paid=False)
+    print(cart)
     cartitems =cartItems.objects.filter(cart = cart)
     if not cartitems.exists():
         cart.coupon = None
@@ -160,4 +161,9 @@ def remove_from_cart(request, uid):
         print("Item does not exist")
         
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+
+
+
         
